@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File Name  : sqlMapConfig.xml
+    Description: XML File that contains all the SQL Maps required by iBatis.
+    Author     : Finbarr Burke
+-->
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL MAP Config 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true"/>
+	<sqlMap resource="ibatis/Account.xml"/>
+	<sqlMap resource="ibatis/Portfolio.xml"/>
+	<sqlMap resource="ibatis/Company.xml"/>
+	<sqlMap resource="ibatis/Ratings.xml"/>
+</sqlMapConfig>

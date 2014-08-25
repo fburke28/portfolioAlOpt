@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:ots="http://www.onthesnow.com/ots_rss_namespace/">
+  <xs:import namespace="http://www.onthesnow.com/ots_rss_namespace/" schemaLocation="ots.xsd"/>
+  <xs:element name="rss">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="channel"/>
+      </xs:sequence>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="link"/>
+        <xs:element ref="description"/>
+        <xs:element ref="language"/>
+        <xs:element ref="copyright"/>
+        <xs:element ref="image"/>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="language" type="xs:NCName"/>
+  <xs:element name="copyright" type="xs:string"/>
+  <xs:element name="image">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="url"/>
+        <xs:element ref="link"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="url" type="xs:anyURI"/>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="title"/>
+        <xs:element ref="description"/>
+        <xs:element ref="guid"/>
+        <xs:element ref="pubDate"/>
+        <xs:element ref="ots:open_staus"/>
+        <xs:element ref="ots:resort_id"/>
+        <xs:element ref="ots:base_depth"/>
+        <xs:element ref="ots:snowfall_48hr"/>
+        <xs:element ref="ots:region_name"/>
+        <xs:element ref="ots:surface_condition"/>
+        <xs:element ref="ots:base_depth_metric"/>
+        <xs:element ref="ots:snowfall_48hr_metric"/>
+        <xs:element ref="ots:resort_rss_link"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="guid">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:anyURI">
+          <xs:attribute name="isPermaLink" use="required" type="xs:boolean"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pubDate" type="xs:string"/>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="link" type="xs:anyURI"/>
+  <xs:element name="description" type="xs:string"/>
+</xs:schema>

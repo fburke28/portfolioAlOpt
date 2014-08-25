@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File Name  : Portfolio.xml
+    Description: SQL map ibatis file for Portfolio related data.
+    Author     : Finbarr Burke
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Portfolio">
+
+	<typeAlias alias="Portfolio" type="com.po.domain.Portfolio"/>
+	<typeAlias alias="Holding" type="com.po.domain.Holding"/>
+
+	<resultMap id="portfolioResult" class="Portfolio">
+		<result column="userName" property="userName"/>
+		<result column="accountNumber" property="accountNumber"/>
+		<result column="investment" property="investment"/>
+		<result column="cashTotal" property="cashTotal"/>
+		<result column="equityTotal" property="equityTotal"/>
+		<result column="totalValue" property="totalValue"/>
+		<result column="dailyPercentChange" property="dailyPercentChange"/>
+		<result column="percentChanged" property="percentChanged"/>
+		<result column="Update_Tmstp" property="updateTmstp"/>
+	</resultMap>
+
+	<resultMap id="portfolioConstraintResult" class="Portfolio">
+		<result column="accountNumber" property="accountNumber"/>
+		<result column="investment" property="investment"/>
+		<result column="maxPercentSingleStock" property="maxPercentSingleStock"/>
+		<result column="maxPercentSector" property="maxPercentSector"/>
+		<result column="dailyVolatility" property="dailyVolatility"/>
+		<result column="preferredSector" property="preferredSector"/>
+		<result column="Update_Tmstp" property="updateTmstp"/>
+	</resultMap>
+
+	<resultMap id="holdingsResult" class="Holding">
+		<result column="holdingKey" property="holdingKey"/>
+		<result column="accountNumber" property="accountNumber"/>
+		<result column="symbol" property="symbol"/>
+		<result column="quantity" property="quantity"/>
+		<result column="tradePrice" property="tradePrice"/>
+		<result column="price" property="price"/>
+		<result column="price_change" property="priceChange"/>
+		<result column="update_Tmstp" property="updateTmstp"/>
+	</resultMap>
+
+	<resultMap id="optHoldingsResult" class="Holding">
+		<result column="accountNumber" property="accountNumber"/>
+		<result column="symbol" property="symbol"/>
+		<result column="quantity" property="quantity"/>
+		<result column="tradePrice" property="tradePrice"/>
+		<result column="update_Tmstp" property="updateTmstp"/>
+	</resultMap>
+
+	<parameterMap id="insert-portfolio-constraint-param" class="java.util.HashMap">
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<parameter property="maxPercentSingleStock" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+		<parameter property="maxPercentSector" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+		<parameter property="dailyVolatility" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+		<parameter property="preferredSector" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</parameterMap>
+
+	<parameterMap id="insert-holding-param" class="java.util.HashMap">
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="quantity" jdbcType="int" javaType="java.lang.Long"/>
+  		<parameter property="tradePrice" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="update_Tmstp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	</parameterMap>
+
+	<parameterMap id="update-holding-param" class="java.util.HashMap">
+  		<parameter property="quantity" jdbcType="int" javaType="java.lang.Long"/>
+  		<parameter property="update_Tmstp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</parameterMap>
+
+	<parameterMap id="update-ind-holding-param" class="java.util.HashMap">
+  		<parameter property="quantity" jdbcType="int" javaType="java.lang.Long"/>
+  		<parameter property="update_Tmstp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="quantity" jdbcType="int" javaType="java.lang.Long"/>
+  		<parameter property="tradePrice" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+	</parameterMap>
+
+	<parameterMap id="insert-portfolio-param" class="java.util.HashMap">
+  		<parameter property="userName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="investment" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="cashTotal" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="totalValue" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+	</parameterMap>
+
+	<parameterMap id="update-portfolio-param" class="java.util.HashMap">
+		<parameter property="investment" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="cashTotal" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="equityTotal" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="totalValue" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="dailyPercentChange" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="percentChanged" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="updateTmstmp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  		<parameter property="accountNumber" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</parameterMap>
+
+	<select id="portfolios" resultMap="portfolioResult">
+		SELECT
+			*
+		FROM
+			portfolio
+	</select>
+
+	<select id="retrievePortfolio" resultMap="portfolioResult">
+		SELECT
+			*
+		FROM
+			portfolio
+		WHERE
+			accountNumber = #accountNumber#
+	</select>
+
+	<select id="retrievePortfolioConstraints" resultMap="portfolioConstraintResult">
+		SELECT
+			pc.accountNumber, p.investment, pc.maxPercentSingleStock, pc.maxPercentSector,
+			pc.dailyVolatility, pc.preferredSector, pc.Update_Tmstp
+		FROM
+			portfolio_constraints pc, portfolio p
+		WHERE
+			pc.accountNumber = #accountNumber# and
+			pc.accountNumber = p.accountNumber
+	</select>
+
+	<select id="accountNumberAvailability" resultClass="int">
+		SELECT
+			count(*)
+		FROM
+			portfolio
+		WHERE
+			accountNumber = #accountNumber#
+	</select>
+
+	<select id="holdings" resultMap="holdingsResult">
+		SELECT
+			h.holdingKey, h.accountNumber, h.symbol, h.quantity, h.tradePrice, c.price, c.price_change, h.update_Tmstp
+		FROM
+			holdings h, company c
+		WHERE
+			h.symbol = c.symbol AND h.accountNumber = #accountNumber#
+	</select>
+
+	<select id="cashHolding" resultClass="java.math.BigDecimal">
+		SELECT
+			quantity
+		FROM
+			holdings
+		WHERE
+			symbol = 'LIQUIDITY' AND accountNumber = #accountNumber#
+	</select>
+
+	<select id="optholdings" resultMap="optHoldingsResult">
+		SELECT
+			h.accountNumber, h.symbol, h.quantity, h.tradePrice, h.update_Tmstp
+		FROM
+			optimized_holdings h
+		WHERE
+			h.accountNumber = #accountNumber#
+	</select>
+
+	<insert id="insertHolding" parameterMap="insert-holding-param">
+		INSERT INTO holdings
+			(accountNumber, symbol, quantity, tradePrice, update_Tmstp)
+		VALUES
+			(?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updateHolding">
+		UPDATE holdings
+		SET quantity = #quantity#, update_Tmstp = #updateTmstp#
+		WHERE holdingKey = #holdingKey#
+	</update>
+
+	<update id="updateCashHolding" parameterMap="update-holding-param">
+		UPDATE holdings
+		SET quantity = ?, update_Tmstp = ?
+		WHERE accountNumber = ? and symbol = ?
+	</update>
+
+	<delete id="deleteHolding">
+		DELETE FROM holdings
+		WHERE holdingKey = #holdingKey#
+	</delete>
+
+	<insert id="insertPortfolio" parameterMap="insert-portfolio-param">
+		INSERT INTO portfolio
+			(userName, accountNumber, Investment, cashTotal, totalValue)
+		VALUES
+			(?, ?, ?, ?, ?)
+	</insert>
+
+	<insert id="insertPortfolioConstraints" parameterMap="insert-portfolio-constraint-param">
+		INSERT INTO portfolio_constraints
+			(accountNumber, maxPercentSingleStock, maxPercentSector, dailyVolatility, preferredSector)
+		VALUES
+			(?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updatePortfolioConstraints">
+		UPDATE portfolio_constraints
+		SET maxPercentSingleStock = #maxPercentSingleStock#, maxPercentSector = #maxPercentSector#,
+			dailyVolatility = #dailyVolatility#, preferredSector = #preferredSector#,
+			update_Tmstp = #updateTmstp#
+		WHERE accountNumber = #accountNumber#
+	</update>
+
+	<update id="updatePortfolio" parameterMap="update-portfolio-param">
+		UPDATE portfolio
+		SET investment = ?, cashTotal = ?, equityTotal = ?, totalValue = ?, dailyPercentChange = ?,
+		    percentChanged = ?, Update_Tmstp = ?
+		WHERE accountNumber = ?
+	</update>
+
+	<delete id="deleteHoldings">
+		DELETE from holdings
+		WHERE accountNumber = #accountNumber#
+	</delete>
+
+	<delete id="deleteOptHoldings">
+		DELETE from optimized_holdings
+		WHERE accountNumber = #accountNumber#
+	</delete>
+
+</sqlMap>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.onthesnow.com/ots_rss_namespace/" xmlns:ots="http://www.onthesnow.com/ots_rss_namespace/">
+  <xs:import schemaLocation="snowRSS.xsd"/>
+  <xs:element name="open_staus" type="xs:string"/>
+  <xs:element name="resort_id" type="xs:integer"/>
+  <xs:element name="base_depth" type="xs:integer"/>
+  <xs:element name="snowfall_48hr" type="xs:integer"/>
+  <xs:element name="region_name" type="xs:NCName"/>
+  <xs:element name="surface_condition" type="xs:string"/>
+  <xs:element name="base_depth_metric" type="xs:NCName"/>
+  <xs:element name="snowfall_48hr_metric" type="xs:NCName"/>
+  <xs:element name="resort_rss_link" type="xs:anyURI"/>
+</xs:schema>

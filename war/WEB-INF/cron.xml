@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/app/snowReport/loadSnowReport</url>
+    <description>Retrieve the latest snow report information for NE ski resorts.</description>
+    <timezone>America/New_York</timezone>
+    <schedule>every 8 hours</schedule>
+  </cron>
+  <cron>
+    <url>/app/cron/runCycle</url>
+    <description>Run app cycle.</description>
+    <timezone>America/New_York</timezone>
+    <schedule>every day 21:15</schedule>
+  </cron>
+</cronentries>

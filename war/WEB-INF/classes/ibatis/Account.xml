@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File Name  : Account.xml
+    Description: SQL map ibatis file for Account details.
+    Author     : Finbarr Burke
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Account">
+
+	<typeAlias alias="Account" type="com.po.domain.Account" />
+
+	<resultMap id="accountResult" class="Account">
+		<result column="firstname" property="firstName"/>
+		<result column="lastname" property="lastName"/>
+		<result column="username" property="userName"/>
+		<result column="dateOfBirth" property="dateOfBirth"/>
+		<result column="email" property="email"/>
+		<result column="age" property="age"/>
+	</resultMap>
+
+	<parameterMap id="insert-account-param" class="java.util.HashMap">
+  		<parameter property="firstName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="lastName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="userName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="dateOfBirth" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="email" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="age" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</parameterMap>
+
+	<select id="usernameAvailability" resultClass="int">
+		SELECT
+			count(*)
+		FROM
+			users
+		WHERE
+			username = #username#
+	</select>
+
+	<insert id="insertAccount" parameterMap="insert-account-param">
+		INSERT INTO users
+			(firstName, lastName, userName, password, dateOfBirth, email, age)
+		VALUES
+			(?, ?, ?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updateAccount">
+		UPDATE users
+		SET lastName = #lastName#, email = #email#
+		WHERE userName = #userName#
+	</update>
+
+	<select id="retrieveAccount" resultMap="accountResult">
+		SELECT
+			firstName, lastName, userName, dateOfBirth, email, age
+		FROM
+			users
+		WHERE
+			username = #username#
+	</select>
+
+	<select id="portfolioExists" resultClass="int">
+		SELECT 
+			count(*)
+		FROM
+			portfolio
+		WHERE
+			userName = #username#
+	</select>
+
+	<select id="retrieveAccountnumber" resultClass="String">
+		SELECT
+			accountNumber
+		FROM
+			portfolio
+		WHERE
+			userName = #username#
+	</select>
+
+</sqlMap>

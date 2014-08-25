@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File Name  : Company.xml
+    Description: SQL map ibatis file for Company table.
+    Author     : Finbarr Burke
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Company">
+
+	<typeAlias alias="Company" type="com.po.domain.Company"/>
+	<typeAlias alias="CompanyClassification" type="com.po.domain.CompanyClassification"/>
+
+	<resultMap id="companyResult" class="Company">
+		<result column="Symbol" property="symbol"/>
+		<result column="Company_Desc" property="companyDesc"/>
+		<result column="Sector" property="sector"/>
+		<result column="Industry" property="industry"/>
+		<result column="Country" property="country"/>
+		<result column="Market_Capitalization" property="marketCap"/>
+		<result column="Price_Per_Earnings" property="pricePerEarnings"/>
+		<result column="Price" property="price"/>
+		<result column="Price_Change" property="change"/>
+		<result column="Price_Per_Sales" property="pricePerSales"/>
+		<result column="Price_Per_Book" property="pricePerBook"/>
+		<result column="Price_Per_Earnings_Growth" property="pricePerEarningsGrowth"/>
+		<result column="EPS_Current_Year_Growth" property="epsCurrentYearGrowth"/>
+		<result column="Collab_rating" property="collabRating"/>
+		<result column="System_Rating" property=systemRating/>
+		<result column="Update_Tmstp" property="updateTmstmp"/>
+	</resultMap>
+
+	<parameterMap id="insert-company-param" class="java.util.HashMap">
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="companyDesc" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="sector" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="industry" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="country" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="pricePerEarnings" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="price" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="change" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+	</parameterMap>
+
+	<parameterMap id="update-company-param" class="java.util.HashMap">
+  		<parameter property="marketCap" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="pricePerEarnings" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="price" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="change" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="pricePerSales" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="pricePerBook" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="pricePerEarningsGrowth" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="epsCurrentYearGrowth" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="updateTmstmp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</parameterMap>
+
+	<parameterMap id="insert-company-classifier-param" class="java.util.HashMap">
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="output1" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="output2" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="outlook" jdbcType="Numeric" javaType="java.lang.Long"/>
+  		<parameter property="updateTmstp" jdbcType="VARCHAR" javaType="java.util.Date"/>
+	</parameterMap>
+
+	<select id="companyCount" resultClass="int">
+		SELECT
+			COUNT(*)
+		FROM
+			company
+	</select>
+
+	<select id="sectors" resultClass="String">
+		SELECT
+			distinct sector
+		FROM
+			company
+	</select>
+
+	<select id="symbols" resultClass="String">
+		SELECT
+			symbol
+		FROM
+			company
+	</select>
+
+	<select id="companies" resultMap="companyResult">
+		SELECT
+			*
+		FROM
+			company
+	</select>
+
+	<select id="companiesPerSector" resultMap="companyResult">
+		SELECT
+			*
+		FROM
+			company
+		WHERE
+			sector = #sector#
+	</select>
+
+	<select id="companyPerSymbol" resultMap="companyResult">
+		SELECT
+			*
+		FROM
+			company
+		WHERE
+			symbol = #symbol#
+	</select>
+
+	<insert id="insertCompany" parameterMap="insert-company-param">
+		INSERT INTO company
+			(Symbol, Company_Desc, Sector, Industry, Country, Price_Per_Earnings, Price, Price_Change)
+		VALUES
+			(?, ?, ?, ?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updateCompany" parameterMap="update-company-param">
+		UPDATE company
+		SET Market_Capitalization = ?, Price_Per_Earnings = ?, Price = ?, Price_Change = ?,
+		    Price_Per_Sales = ?, Price_Per_Book = ?, Price_Per_Earnings_Growth = ?,
+		    EPS_Current_Year_Growth = ?, Update_Tmstp = ?
+		WHERE symbol = ?
+	</update>
+
+	<update id="updateRating">
+		UPDATE company
+		SET Collab_rating = #collabRating#, Update_Tmstp = #updateTmstp#
+		WHERE symbol = #symbol#
+	</update>
+
+	<select id="companyClassification" resultClass="String">
+		SELECT
+			symbol
+		FROM
+			company_classifier_results
+		WHERE symbol = #symbol#
+	</select>
+
+	<insert id="insertCompanyClassifier" parameterMap="insert-company-classifier-param">
+		INSERT INTO company_classifier_results
+			(symbol, output1, output2, outlook, update_Tmstmp)
+		VALUES
+			(?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updateCompanyClassifier">
+		UPDATE company_classifier_results
+		SET output1 = #output1#, output2 = #output2#, outlook = #outlook#,
+			update_Tmstmp = #updateTmstmp#
+		WHERE symbol = "symbol"
+	</update>
+
+</sqlMap>

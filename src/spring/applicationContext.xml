@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	File Name : applicationContext.xml Description: XML File that wires up
+	different context files. Author : Finbarr Burke
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- <import resource="classpath:spring/application-context.xml"/> -->
+
+	<!--=================================== Job Scheduler ========================================-->
+
+	<!-- <bean name="eodOptimizer" class="org.springframework.scheduling.quartz.JobDetailBean">
+  		<property name="jobClass" value="com.po.eod.invoker.EodCycleInvoker" />
+  		<property name="jobDataAsMap">
+    		<map>
+      			<entry key="companyLoader" value-ref="companyLoader"/>
+      			<entry key="eodUpdateCycle" value-ref="eodUpdateCycle"/>
+      			<entry key="portfolioCalculator" value-ref="portfolioCalculator"/>
+      			<entry key="securityRatingsManager" value-ref="securityRatingsManager"/>
+      			<entry key="securityClassifier" value-ref="securityClassifier"/>
+      			<entry key="classificationLoader" value-ref="classificationLoader"/>
+      			<entry key="constraintOptimizer" value-ref="constraintOptimizer"/>
+   	 		</map>
+  		</property>
+	</bean> -->
+
+	<!-- Cron Trigger -->
+	<!-- <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="eodOptimizer" />
+		<property name="cronExpression" value="0 15 22 ? * *" />
+ 	</bean> -->
+<!-- 0 55 19 ? * MON-FRI -->
+ 	<!-- <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+		    <list>
+				<ref bean="cronTrigger" />
+		    </list>
+		</property>
+   	</bean> -->
+
+	<!--=================================== Service Layer ========================================-->
+
+	<bean id="marketDataService" class="com.poi.service.MarketDataService">
+		<property name="marketDataDao" ref="marketDataDao" />
+	</bean>
+
+	<bean id="accountService" class="com.poi.service.AccountService">
+		<property name="accountDao" ref="accountDao" />
+	</bean>
+
+	<bean id="portfolioService" class="com.poi.service.PortfolioService">
+		<property name="portfolioDao" ref="portfolioDao" />
+		<property name="accountDao" ref="accountDao" />
+		<property name="companyDao" ref="companyDao" />
+		<property name="ratingsDao" ref="ratingsDao" />
+		<property name="marketDataDao" ref="marketDataDao" />
+	</bean>
+
+	<bean id="companyService" class="com.poi.service.CompanyService">
+		<property name="companyDao" ref="companyDao" />
+		<property name="marketDataDao" ref="marketDataDao" />
+	</bean>
+
+	<bean id="ratingsService" class="com.poi.service.RatingsService">
+		<property name="ratingsDao" ref="ratingsDao" />
+		<property name="accountDao" ref="accountDao" />
+	</bean>
+
+	<bean id="snowReportService" class="com.poi.service.SnowReportServiceImpl">
+		<property name="snowReportDao" ref="snowReportDao" />
+	</bean>
+
+</beans>

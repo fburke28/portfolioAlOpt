@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	Tiles configuration file.
+ -->
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- Page layout definitions -->
+
+    <definition name="welcome.definition" template="/WEB-INF/jsp/layout/welcomeLayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/jsp/common/welcomeHeader.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/common/welcomeFooter.jsp" />
+    </definition>
+
+    <definition name="register.definition" template="/WEB-INF/jsp/layout/welcomeLayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/jsp/common/registerHeader.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/common/welcomeFooter.jsp" />
+    </definition>
+
+    <definition name="base.definition" template="/WEB-INF/jsp/layout/layout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp" />
+    </definition>
+
+    <!-- Screens -->
+    <definition name="welcome" extends="welcome.definition">
+        <put-attribute name="title" value="Welcome To Portfolio Allocation Optimizer" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/welcome.jsp" />
+    </definition>
+
+    <definition name="register" extends="register.definition">
+        <put-attribute name="title" value="User Registration" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/register.jsp" />
+    </definition>
+
+    <definition name="home" extends="base.definition">
+        <put-attribute name="title" value="User Account Home" />
+        <put-attribute name="tabSelected" value="home" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/home.jsp" />
+    </definition>
+
+    <definition name="manageHoldings" extends="base.definition">
+        <put-attribute name="title" value="Manage Holdings" />
+        <put-attribute name="tabSelected" value="portfolioManagement" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/manageHoldings.jsp" />
+    </definition>
+
+    <definition name="accountDetails" extends="base.definition">
+        <put-attribute name="title" value="Account Details" />
+        <put-attribute name="tabSelected" value="manageAccount" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/accountDetails.jsp" />
+    </definition>
+
+	<definition name="userDetails" extends="base.definition">
+        <put-attribute name="title" value="User Details" />
+        <put-attribute name="tabSelected" value="manageAccount" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/userDetails.jsp" />
+    </definition>
+
+	<definition name="ratingsMaintenance" extends="base.definition">
+        <put-attribute name="title" value="Ratings Maintenance" />
+        <put-attribute name="tabSelected" value="ratingsMaintenance" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/ratingsMaintenance.jsp" />
+    </definition>
+
+    <definition name="cronTest" extends="register.definition">
+        <put-attribute name="title" value="Cron Test" />
+        <put-attribute name="body" value="/WEB-INF/jsp/content/list.jsp" />
+    </definition>
+
+</tiles-definitions>

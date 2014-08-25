@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File Name  : Ratings.xml
+    Description: SQL map ibatis file for ratings related data.
+    Author     : Finbarr Burke
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Ratings">
+
+	<typeAlias alias="SecurityRating" type="com.po.domain.SecurityRating"/>
+	<typeAlias alias="UserRating" type="com.po.domain.UserRating"/>
+	<typeAlias alias="Account" type="com.po.domain.Account" />
+
+	<parameterMap id="update-rating-param" class="java.util.HashMap">
+		<parameter property="rating" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+		<parameter property="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<parameter property="update_Tmstp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  		<parameter property="userName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</parameterMap>
+
+	<parameterMap id="insert-rating-param" class="java.util.HashMap">
+  		<parameter property="userName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="symbol" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="rating" jdbcType="Decimal" javaType="java.math.BigDecimal"/>
+  		<parameter property="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  		<parameter property="update_Tmstp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	</parameterMap>
+
+	<select id="symbols" resultClass="String">
+		SELECT
+			distinct symbol
+		FROM
+			security_rating
+	</select>
+
+	<select id="ratedSecurities" resultClass="SecurityRating">
+		SELECT
+			*
+		FROM
+			security_rating
+		WHERE
+			symbol = #symbol#
+	</select>
+
+	<select id="maxRatingForUser" resultClass="SecurityRating">
+		SELECT 
+			* 
+		FROM 
+			security_rating 
+		WHERE 
+			rating = ( 
+				select max(rating) from security_rating where userName = #userName#
+			) 
+			and 
+				userName = #userName#
+	</select>
+
+	<select id="ratingsForUser" resultClass="SecurityRating">
+		SELECT
+			*
+		FROM
+			security_rating
+		WHERE
+			userName = #userName#
+	</select>
+
+	<select id="userDetails" resultClass="UserRating">
+		SELECT u.firstname, u.lastname, u.userRating, p.Investment, p.cashTotal, p.equityTotal, p.totalValue, p.dailyPercentChange,
+			p.percentChanged, pc.preferredSector
+		FROM
+			users u, portfolio p, portfolio_constraints pc
+		WHERE
+			u.userName = p.userName and
+			p.accountNumber = pc.accountNumber and
+			u.userName = #userName# and
+			p.accountNumber = #accountNumber#
+	</select>
+
+	<select id="topUsers" resultClass="Account">
+		SELECT 
+			@rownum:=@rownum+1 'rank', u.* 
+		FROM 
+			users u, (SELECT @rownum:=0) r 
+		ORDER BY 
+			userRating desc limit 10;
+	</select>
+
+	<insert id="insertRating" parameterMap="insert-rating-param">
+		INSERT INTO security_rating
+			(userName, symbol, rating, description, update_Tmstp)
+		VALUES
+			(?, ?, ?, ?, ?)
+	</insert>
+
+	<update id="updateRating" parameterMap="update-rating-param">
+		UPDATE security_rating
+		SET rating = ?, description = ?, update_Tmstp = ?
+		WHERE userName = ? and symbol = ?
+	</update>
+
+</sqlMap>
