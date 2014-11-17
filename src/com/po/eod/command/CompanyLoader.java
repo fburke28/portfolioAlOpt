@@ -14,6 +14,7 @@
 */
 package com.po.eod.command;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -70,19 +72,18 @@ public class CompanyLoader implements Command {
 		}
 
 		// Load company data from locally stored finviz.csv datasource
-		//CSVReader reader = null;
+		BufferedReader in = null;
 		try {
 			Resource resource = new ClassPathResource("data/finviz.csv");
 			InputStream stream = resource.getInputStream();
-			InputStreamReader insReader = new InputStreamReader(stream);
-			//reader = new CSVReader(insReader, ',', '\"', 1);
-			String [] nextLine = null;
+			in = new BufferedReader(new InputStreamReader(stream));
+			String inputLine = "";
 			int loadedCompanies = 0;
 			Map<String, List<Company>> sector2Companies = new HashMap<String, List<Company>>();
 			List<Company> companiesToAdd;
-		    while (nextLine  /*(nextLine = reader.readNext())*/ != null) {
+		    while ((inputLine = in.readLine()) != null) {
 		    	Company company = new Company();
-		    	this.readCompanyLine(company, nextLine);
+		    	this.readCompanyLine(company, inputLine.split(","));
 
 		    	companiesToAdd = sector2Companies.get(company.getSector());
 		    	if(companiesToAdd == null) {
@@ -96,13 +97,9 @@ public class CompanyLoader implements Command {
 		    companyDao.insertCompany(sector2Companies);
 		} catch(Exception e) {
 			log.error("Error encountered loading company data.", e);
-		} /*finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				log.warn("IO error closing CSV reader.");
-			}
-		}*/
+		} finally {
+			IOUtils.closeQuietly(in);
+		}
 	}
 
 	/**

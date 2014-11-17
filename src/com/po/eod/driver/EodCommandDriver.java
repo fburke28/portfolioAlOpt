@@ -53,7 +53,7 @@ public class EodCommandDriver {
 
 		// Create spring application context
 		String[] config = new String[] {
-			"spring/application-context.xml"
+			"spring/opt-cycle-context.xml"
 		};
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(config);

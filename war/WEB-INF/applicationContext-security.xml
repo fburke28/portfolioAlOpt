@@ -50,7 +50,7 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-	<bean id="userDetailsService" class="com.poi.service.UserDetailsServiceImpl">
+	<bean id="userDetailsService" class="com.po.service.UserDetailsServiceImpl">
         <property name="objectifyFactory" ref="objectifyFactory" />
         <property name="memcacheService" ref="memcacheServiceUser" />
     </bean>

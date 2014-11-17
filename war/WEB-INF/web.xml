@@ -3,8 +3,8 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
-	<display-name>Portfolio Optimization Interface</display-name>
-	<description>Portfolio Optimization Interface</description>
+	<display-name>Portfolio Optimization</display-name>
+	<description>Portfolio Optimization</description>
 
 	<filter>
 		<filter-name>Character Encoding</filter-name>
@@ -61,14 +61,8 @@
 		<session-timeout>15</session-timeout>
 	</session-config>
 
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<!-- Displays a stack trace -->
-		<location>/WEB-INF/jsp/common/uncaughtException.jsp</location>
-	</error-page>
-
 	<welcome-file-list>
-	    <welcome-file>index.jsp</welcome-file>
+	    <welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>
