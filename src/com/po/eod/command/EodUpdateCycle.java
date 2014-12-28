@@ -83,6 +83,7 @@ public class EodUpdateCycle implements Command {
 			}
 		}
 		log.info("Updating companies.");
+		// Update sector : list of companies
 		companyDao.updateCompany(companies);
 	}
 
