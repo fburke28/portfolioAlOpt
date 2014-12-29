@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			header {
+			    background-color:black;
+			    color:white;
+			    text-align:center;
+			    padding:5px;	 
+			}
+			nav {
+			    line-height:30px;
+			    background-color:#eeeeee;
+			    height:300px;
+			    width:100px;
+			    float:left;
+			    padding:5px;	      
+			}
+			section {
+			    float:left;
+			    padding:10px;	 	 
+			}
+			footer {
+			    background-color:black;
+			    color:white;
+			    clear:both;
+			    text-align:center;
+			    padding:5px;	 	 
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<h1>API layer for stock evaluator</h1>
+		</header>
+
+		<section>
+			<h2>Opt cycle flow</h2>
+
+			<ol>
+				<li>Check and seed companies if necessary.</li>
+				<li>Retrieve latest company data from finance service. Load as - sector : List of companies</li>
+				<li>For each account rate users based on performance of stock ratings</li>
+				<li>Rate stocks based on performance of stock and updated user rating</li>
+			</ol>
+
+			<h3>Company APIs</h3>
+			<ul>
+				<li>List of sector names</li>
+				<li>Retrieve list of companies per sector -> symbol, name</li>
+				<li>Retrieve company details by symbol</li>
+				<li>Persist stock rating, comment</li>
+			</ul>
+
+			<h3>Account APIs</h3>
+			<ul>
+				<li>Retrieve account for userName</li>
+				<li>Retrieve all accounts</li>
+				<li>Retrieve average user account rating</li>
+				<li>Retrieve top ten rated users</li>
+				<li>Retrieve current users overall ranking</li>
+			</ul>
+
+			<h3>Stock Rating APIs</h3>
+			<ul>
+				<li>Top ten rated stocks</li>
+				<li>Top five highest rating gain</li>
+				<li>Top five highest rating loss</li>
+				<li>Retrieve ratings per sector</li>
+			</ul>
+		</section>
+		
+		<footer>
+			Copyright © Finbarr Burke
+		</footer>
+	</body>
+</html>
