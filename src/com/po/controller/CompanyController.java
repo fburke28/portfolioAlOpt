@@ -80,8 +80,17 @@ public class CompanyController {
 	 * @return List of sectors
 	 */
 	@RequestMapping(value = "/retrieveSymbols", method = RequestMethod.GET)
-	public @ResponseBody List<CompanyIdentifier> retrieveSymbols() {
-		return companyService.retrieveCompanySymbols();
+	public @ResponseBody List<String> retrieveSymbols() {
+		return companyService.retrieveCompanySymbols(null);
+	}
+
+	/**
+	 * Method used to retrieve symbols.
+	 * @return List of sectors
+	 */
+	@RequestMapping(value = "/retrieveSymbolsForSector", method = RequestMethod.GET)
+	public @ResponseBody List<String> retrieveSymbols(String sector) {
+		return companyService.retrieveCompanySymbols(sector);
 	}
 
 	/**

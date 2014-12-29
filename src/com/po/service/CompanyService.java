@@ -69,7 +69,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public int retrieveCompanyCount() {
 		return companyDao.retrieveCompanyCount();
 	}
@@ -77,7 +76,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public List<String> retrieveCompanySectors() {
 		return companyDao.retrieveCompanySectors();
 	}
@@ -85,20 +83,20 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
-	public List<CompanyIdentifier> retrieveCompanySymbols() {
+	public List<String> retrieveCompanySymbols(String sector) {
 		List<CompanyIdentifier> identifiers = companyDao.retrieveCompanySymbols();
-		/*List<String> symbols = new ArrayList<String>();
+		List<String> symbols = new ArrayList<String>();
 		for(CompanyIdentifier identifier : identifiers) {
-			symbols.add(identifier.getSymbol());
-		}*/
-		return identifiers;
+			if(sector == null || identifier.getSector().equalsIgnoreCase(sector)) {
+				symbols.add(identifier.getSymbol());
+			}
+		}
+		return symbols;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public List<Company> retrieveCompanies() {
 		return companyDao.retrieveCompanies();
 	}
@@ -106,7 +104,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public List<Company> retrieveCompaniesForSector(String sector) {
 		return companyDao.retrieveCompaniesForSector(sector);
 	}
@@ -114,7 +111,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public Company retrieveCompanyForSymbol(String symbol) {
 		log.info("Retrieving company data for " + symbol);
 
@@ -150,7 +146,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public void insertCompany(Company company) {
 		Map<String, List<Company>> companyMap = new HashMap<String, List<Company>>();
 		List<Company> companies = new ArrayList<Company>();
@@ -162,7 +157,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public void updateCompany(Company company) {
 		List<Company> companies = new ArrayList<Company>();
 		companies.add(company);
@@ -182,11 +176,10 @@ public class CompanyService implements ICompanyService {
 	public void persistStockRating(StockRating stockRating) {
 		companyDao.persistStockRating(stockRating);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public void updateCompanyRating(String symbol, BigDecimal collabRating) {
 		companyDao.updateCompanyRating(symbol, collabRating);
 	}
@@ -194,7 +187,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public boolean existsCompanyClassification(String symbol) {
 		return companyDao.existsCompanyClassification(symbol);
 	}
@@ -202,7 +194,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public void insertCompanyClassification(CompanyClassification companyClassification) {
 		companyDao.insertCompanyClassification(companyClassification);
 	}
@@ -210,7 +201,6 @@ public class CompanyService implements ICompanyService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@RemotingInclude
 	public void updateCompanyClassification(CompanyClassification companyClassification) {
 		companyDao.updateCompanyClassification(companyClassification);
 	}

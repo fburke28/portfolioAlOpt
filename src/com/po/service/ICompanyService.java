@@ -12,7 +12,6 @@
 * restrictions as set forth in paragraph (b)(3)(B) of the Rights in
 * Technical Data and Computer Software clause in DAR 7-104.9(a).
 */
-
 package com.po.service;
 
 import java.math.BigDecimal;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import com.po.domain.Company;
 import com.po.domain.CompanyClassification;
-import com.po.domain.CompanyIdentifier;
 import com.po.domain.StockRating;
 
 /**
@@ -53,7 +51,7 @@ public interface ICompanyService {
 	 * Method used to retrieve all company symbols
 	 * @return List of symbols
 	 */
-	List<CompanyIdentifier> retrieveCompanySymbols();
+	List<String> retrieveCompanySymbols(String sector);
 
 	/**
 	 * Method used to retrieve all companies
